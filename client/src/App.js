@@ -1,13 +1,23 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState, useEffect} from 'react';
 
 function App() {
+
+  const [message, setMessage] = useState("No");
+
+  useEffect(()=>{
+    fetch('http://localhost:3000/api/test', {method:"GET"})
+    .then(res=>res.json())
+    .then(m => setMessage(m.textsent)
+    )
+  });
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
+        <p> Funziona? {message}
         </p>
         <a
           className="App-link"
