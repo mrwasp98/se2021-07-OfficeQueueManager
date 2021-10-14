@@ -24,7 +24,7 @@ export default function AdminHomepage(props) {
     };
 
     return (
-        <Container className="justify-content-center pt-5">
+        <Container className="justify-content-center pt-5 mt-5">
             <Card className="text-center">
                 <Card.Body>
                     <Card.Title>Welcome, Admin.</Card.Title>
