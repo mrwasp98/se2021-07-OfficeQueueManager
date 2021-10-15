@@ -84,6 +84,26 @@ app.get('/api/services',
       });
     });
   });
+
+  
+//insert served tickets
+app.post('/api/ticket', async (req, res) =>{
+  const ticket_num = req.body.ticket_num;
+  const id_service = req.body.id_service;
+  const start_time = req.body.start_time;
+  const end_time = req.body.end_time;
+  const id_officer = req.body.id_officer;
+  const date = req.body.date;
+  ticketDao.createTicketServed(ticket_num,id_service,date,start_time,end_time,id_officer)
+    .then((ticket_num)=>{res.json(ticket_num)})
+    .catch((err) => {
+      res.status(503).json({
+        errors: [{ error: `Database error during the creation of new ticket served: ${err}.` }],
+      });
+    });
+  
+})
+
 // activate the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
