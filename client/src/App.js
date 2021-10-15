@@ -6,6 +6,7 @@ import HomeButtons from './Components/HomeButtons';
 import { BrowserRouter as Router, Route, } from "react-router-dom";
 
 import AdminHomepage from './Components/AdminHomepage';
+import NewCounter from './Components/NewCounter';
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
    <>
     <Router>
       <Route path="/" render={() => <> <MyNav /> <HomeButtons/></>} />
-      <Route exact path="/admin" render={()=> <AdminHomepage/>}/>
+      <Route exact path="/admin" render={()=> <><AdminHomepage/> <NewCounter/></>}/>
     </Router>
    </>
   );
