@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, } from "react-router-dom";
 
 import AdminHomepage from './Components/AdminHomepage';
 import NewCounter from './Components/NewCounter';
+import OfficerHomePage from './Components/OfficerHomePage';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
     <Router>
       <Route path="/" render={() => <> <MyNav /> <HomeButtons/></>} />
       <Route exact path="/admin" render={()=> <><AdminHomepage/> <NewCounter/></>}/>
+      <Route exact path="/officer" render={() => <><OfficerHomePage/></>} />
     </Router>
    </>
   );

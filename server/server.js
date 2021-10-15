@@ -5,7 +5,8 @@ const morgan = require("morgan"); // logging middleware
 const { check, validationResult } = require('express-validator');
 const serviceDao = require('./service-dao');
 const counterDao = require('./counter-dao');
-const officerDao = require('./officer-dao');
+const ticketDao = require('./ticket-dao');
+const officerId = require('./officer-dao');
 
 // init express
 const app = new express();
@@ -30,7 +31,7 @@ app.get('/api/officers', async (req, res) => {
 app.post('/api/services',
   [
     check(['serviceTime']).isFloat(),
-    check(['tagName','serviceTime']).isLength({ min: 1, max: undefined })
+    check(['tagName', 'serviceTime']).isLength({ min: 1, max: undefined })
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -51,30 +52,48 @@ app.post('/api/services',
 
 //insert new counter (with one or more services)
 app.post('/api/counters', async (req, res) => {
-    const counterId = req.body.counterNum;
-    const services = req.body.services;
-    try {
-      services.forEach(async serviceName =>  {
-        const serviceId = await serviceDao.getId(serviceName);
-        const result = await counterDao.createCounter(counterId,serviceId);
-        res.json(result);
-      });
-      
-    } catch (err) {
-      res.status(503).json({ error: `Database error during the creation of new counter: ${err}.` });
-    }
-  })
+  const counterId = req.body.counterNum;
+  const services = req.body.services;
+  try {
+    services.forEach(async serviceName => {
+      const serviceId = await serviceDao.getId(serviceName);
+      const result = await counterDao.createCounter(counterId, serviceId);
+      res.json(result);
+    });
 
-  app.put('/api/officer/:officerId/status/:stat', async(req, res) =>{
-    try{
-      await officerDao.updateStatus(req.params.officerId, req.params.stat);
-      res.status(201).end();
-    } catch(err) {
-      res.status(503).json({error: `Database error ${err}.`});
-    }
+  } catch (err) {
+    res.status(503).json({ error: `Database error during the creation of new counter: ${err}.` });
+  }
+})
+
+//get all services (names)
+app.get('/api/services',
+  async (req, res) => {
+    serviceDao.getNames()
+    .then(names => res.json(names.map(x => x.tag_name)))
+    .catch(() => res.status(500).end());
   });
 
+  app.get('/api/ticket', async (req, res) => {
+    const ticket_num = await ticketDao.getNewID(req.params.service);
+    ticketDao.createTicketToServe(req.body.service,ticket_num)
+    .then((ticket_num)=>{res.json(ticket_num)})
+    .catch((err) => {
+      res.status(503).json({
+        errors: [{ error: `Database error during the creation of new ticket: ${err}.` }],
+      });
+    });
+  });
 // activate the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
+});
+
+app.put('/api/officer/:officerId/status/:stat', async(req, res) =>{
+  try{
+    await officerDao.updateStatus(req.params.officerId, req.params.stat);
+    res.status(201).end();
+  } catch(err) {
+    res.status(503).json({error: `Database error ${err}.`});
+  }
 });

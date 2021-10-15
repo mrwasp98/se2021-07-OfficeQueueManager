@@ -10,3 +10,9 @@ content-type: application/json
     "serviceTime": 13.2
 }
 
+
+###
+GET http://localhost:3001/api/ticket
+Content-type: application/json
+
+{ "service" : "AS"}
