@@ -16,3 +16,17 @@ GET http://localhost:3001/api/ticket
 Content-type: application/json
 
 { "service" : "AS"}
+
+###
+
+POST http://localhost:3001/api/ticket 
+content-type: application/json
+
+{
+    "ticket_num" : 5, 
+    "id_service" : "AS",
+    "start_time" : 5, 
+    "end_time" : 5, 
+    "id_officer" : 5, 
+    "date" : "2021-10-15" 
+}
