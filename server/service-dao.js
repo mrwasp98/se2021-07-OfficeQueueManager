@@ -18,12 +18,30 @@ exports.createService = (service) => {
 exports.getId = (tagname) => {
     return new Promise((resolve, reject) => {
         const sql = 'SELECT id FROM services WHERE tag_name=?';
-        db.run(sql, [tagname], function (err) {
+        db.get(sql, [tagname], (err, row) => {
             if (err) {
                 reject(err);
                 return;
             }
-            resolve(this.lastID);
+            if (row == undefined) {
+                resolve({ error: 'Service not found.' });
+            }
+            else {
+                resolve(row.id);
+            }
+        });
+    });
+};
+
+exports.getNames = () => {
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT tag_name FROM services';
+        db.all(sql, [], (err, rows) => {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(rows);
         });
     });
 };
