@@ -4,6 +4,7 @@ const express = require('express');
 const morgan = require("morgan"); // logging middleware
 const { check, validationResult } = require('express-validator');
 const serviceDao = require('./service-dao');
+const counterDao = require('./counter-dao');
 
 // init express
 const app = new express();
@@ -37,6 +38,22 @@ app.post('/api/services',
       res.json(result);
     } catch (err) {
       res.status(503).json({ error: `Database error during the creation of new service: ${err}.` });
+    }
+  })
+
+//insert new counter (with one or more services)
+app.post('/api/counters', async (req, res) => {
+    const counterId = req.body.counterNum;
+    const services = req.body.services;
+    try {
+      services.forEach(async serviceName =>  {
+        const serviceId = await serviceDao.getId(serviceName);
+        const result = await counterDao.createCounter(counterId,serviceId);
+        res.json(result);
+      });
+      
+    } catch (err) {
+      res.status(503).json({ error: `Database error during the creation of new counter: ${err}.` });
     }
   })
 

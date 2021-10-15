@@ -14,3 +14,16 @@ exports.createService = (service) => {
         });
     });
 };
+
+exports.getId = (tagname) => {
+    return new Promise((resolve, reject) => {
+        const sql = 'SELECT id FROM services WHERE tag_name=?';
+        db.run(sql, [tagname], function (err) {
+            if (err) {
+                reject(err);
+                return;
+            }
+            resolve(this.lastID);
+        });
+    });
+};
