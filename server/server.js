@@ -22,7 +22,7 @@ app.get('/api/test', (req, res) => {
 app.post('/api/services',
   [
     check(['serviceTime']).isFloat(),
-    check(['tagName','serviceTime']).isLength({ min: 1, max: undefined })
+    check(['tagName', 'serviceTime']).isLength({ min: 1, max: undefined })
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -43,19 +43,28 @@ app.post('/api/services',
 
 //insert new counter (with one or more services)
 app.post('/api/counters', async (req, res) => {
-    const counterId = req.body.counterNum;
-    const services = req.body.services;
-    try {
-      services.forEach(async serviceName =>  {
-        const serviceId = await serviceDao.getId(serviceName);
-        const result = await counterDao.createCounter(counterId,serviceId);
-        res.json(result);
-      });
-      
-    } catch (err) {
-      res.status(503).json({ error: `Database error during the creation of new counter: ${err}.` });
-    }
-  })
+  const counterId = req.body.counterNum;
+  const services = req.body.services;
+  try {
+    services.forEach(async serviceName => {
+      const serviceId = await serviceDao.getId(serviceName);
+      const result = await counterDao.createCounter(counterId, serviceId);
+      res.json(result);
+    });
+
+  } catch (err) {
+    res.status(503).json({ error: `Database error during the creation of new counter: ${err}.` });
+  }
+})
+
+//get all services (names)
+app.get('/api/services',
+  async (req, res) => {
+    serviceDao.getNames()
+    .then(names => res.json(names.map(x => x.tag_name)))
+    .catch(() => res.status(500).end());
+  });
+
 
 // activate the server
 app.listen(port, () => {
