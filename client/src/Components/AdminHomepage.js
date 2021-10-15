@@ -19,15 +19,19 @@ export default function AdminHomepage(props) {
             addService(serviceTag, serviceTime)
                 .then(() => setLoading(false))
                 .catch(res => setError(res.message))
-                .finally(() => setLoading(false))
+                .finally(() => {
+                    setLoading(false)
+                    setServiceTag("");
+                    setServiceTime("");
+                })
         }
     };
 
     return (
         <Container className="justify-content-center pt-5 mt-5">
+            <h1 className="text-center">Welcome, Admin.</h1>
             <Card className="text-center">
                 <Card.Body>
-                    <Card.Title>Welcome, Admin.</Card.Title>
                     <Card.Text>
                         If you want to <b>add a new service</b>, this is the right place.
                     </Card.Text>
@@ -59,7 +63,6 @@ export default function AdminHomepage(props) {
                             {error && (<Alert variant="danger" className="mb-0 mr-1"> {error}</Alert>)}
                             <Button variant="outline-dark" type="submit">Add service</Button>
                         </Row>
-
                     </Form>
                 </Card.Body>
             </Card>
