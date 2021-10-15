@@ -5,6 +5,7 @@ const morgan = require("morgan"); // logging middleware
 const { check, validationResult } = require('express-validator');
 const serviceDao = require('./service-dao');
 const counterDao = require('./counter-dao');
+const officerDao = require('./officer-dao');
 
 // init express
 const app = new express();
@@ -17,6 +18,13 @@ app.use(express.json());
 app.get('/api/test', (req, res) => {
   res.json({ textsent: "backend ok!" })
 })
+
+//get the active officers
+app.get('/api/officers', async (req, res) => {
+  officerDao.getActOfficers()
+    .then(officers => res.status(200).json(officers))
+    .catch(() => res.status(500).json({error: 'error connection db'}));
+});
 
 //insert new service
 app.post('/api/services',
@@ -56,6 +64,15 @@ app.post('/api/counters', async (req, res) => {
       res.status(503).json({ error: `Database error during the creation of new counter: ${err}.` });
     }
   })
+
+  app.put('/api/officer/:officerId/status/:stat', async(req, res) =>{
+    try{
+      await officerDao.updateStatus(req.params.officerId, req.params.stat);
+      res.status(201).end();
+    } catch(err) {
+      res.status(503).json({error: `Database error ${err}.`});
+    }
+  });
 
 // activate the server
 app.listen(port, () => {
