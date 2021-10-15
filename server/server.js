@@ -58,7 +58,6 @@ app.post('/api/counters', async (req, res) => {
   }
 })
 
-<<<<<<< Updated upstream
 //get all services (names)
 app.get('/api/services',
   async (req, res) => {
@@ -67,20 +66,16 @@ app.get('/api/services',
     .catch(() => res.status(500).end());
   });
 
-=======
-//get a ticket of a selected service
-app.get('/api/ticket', async (req, res) => {
-  const ticket_num = await ticketDao.getNewID(req.params.service);
-  ticketDao.createTicketToServe(req.body.service,ticket_num)
-  .then((ticket_num)=>{res.json(ticket_num)})
-  .catch((err) => {
-    res.status(503).json({
-      errors: [{ error: `Database error during the creation of new ticket: ${err}.` }],
+  app.get('/api/ticket', async (req, res) => {
+    const ticket_num = await ticketDao.getNewID(req.params.service);
+    ticketDao.createTicketToServe(req.body.service,ticket_num)
+    .then((ticket_num)=>{res.json(ticket_num)})
+    .catch((err) => {
+      res.status(503).json({
+        errors: [{ error: `Database error during the creation of new ticket: ${err}.` }],
+      });
     });
   });
-});
->>>>>>> Stashed changes
-
 // activate the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
