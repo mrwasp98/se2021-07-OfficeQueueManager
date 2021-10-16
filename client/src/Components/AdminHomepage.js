@@ -17,7 +17,9 @@ export default function AdminHomepage(props) {
         if (form.checkValidity() === true) {
             setLoading(true)
             addService(serviceTag, serviceTime)
-                .then(() => setLoading(false))
+                .then(() => {
+                    props.setDirty(true)
+                })
                 .catch(res => setError(res.message))
                 .finally(() => {
                     setLoading(false)

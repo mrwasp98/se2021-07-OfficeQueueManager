@@ -6,7 +6,7 @@ const { check, validationResult } = require('express-validator');
 const serviceDao = require('./service-dao');
 const counterDao = require('./counter-dao');
 const ticketDao = require('./ticket-dao');
-const officerId = require('./officer-dao');
+const officerDao = require('./officer-dao');
 
 // init express
 const app = new express();
@@ -74,15 +74,23 @@ app.get('/api/services',
     .catch(() => res.status(500).end());
   });
 
-  app.get('/api/ticket', async (req, res) => {
-    const ticket_num = await ticketDao.getNewID(req.params.service);
-    ticketDao.createTicketToServe(req.body.service,ticket_num)
-    .then((ticket_num)=>{res.json(ticket_num)})
-    .catch((err) => {
-      res.status(503).json({
-        errors: [{ error: `Database error during the creation of new ticket: ${err}.` }],
+//add a new ticket
+  app.post('/api/addTicket', async (req, res) => {
+    console.log(req.body.service)
+    const service_id = await serviceDao.getId(req.body.service)
+    .catch((err)=> res.status(503).json({
+      errors: [{ error: `Database error during the creation of new ticket: ${err}.` }],
+    }))
+    if(!service_id.error){
+      const ticket_num = await ticketDao.getNewID(service_id);
+      ticketDao.createTicketToServe(service_id,ticket_num)
+      .then((ticket_num)=>{res.json(ticket_num)})
+      .catch((err) => {
+        res.status(503).json({
+          errors: [{ error: `${service_id}: ${err}.` }],
+        });
       });
-    });
+    }  
   });
 
   

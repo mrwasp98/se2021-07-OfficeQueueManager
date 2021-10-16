@@ -14,9 +14,21 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [allServices, setAllServices] = useState([]);
+
+  const [allOfficers, setAllOfficers] = useState([]);
+  const [flagOfficer, setFlagOfficer] = useState([]);
+  const [dirty, setDirty] = useState(true);
   useEffect(() => {
     API.getAllServices().then((services) => setAllServices(services));
+
   }, []);
+
+  useEffect(() => {
+    if (flagOfficer) {
+      setFlagOfficer(false);
+      API.getActiveOfficers().then((officer) => setAllOfficers(officer));
+    }
+  }, [flagOfficer]);
 
   return (
     <>

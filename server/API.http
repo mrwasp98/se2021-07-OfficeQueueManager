@@ -12,10 +12,10 @@ content-type: application/json
 
 
 ###
-GET http://localhost:3001/api/ticket
+POST http://localhost:3001/api/addTicket HTTP/1.1
 Content-type: application/json
 
-{ "service" : "AS"}
+{ "service" : "non esiste"}
 
 ###
 
