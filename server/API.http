@@ -30,3 +30,7 @@ content-type: application/json
     "id_officer" : 5, 
     "date" : "2021-10-15" 
 }
+
+###
+
+GET http://localhost:3001/api/services HTTP/1.1

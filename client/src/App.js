@@ -9,18 +9,24 @@ import AdminHomepage from './Components/AdminHomepage';
 import NewCounter from './Components/NewCounter';
 import OfficerHomePage from './Components/OfficerHomePage';
 import TicketAcquisitionPage from './Components/TicketAcquisitionPage';
+import API from "./API/GetAPI.js";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [allServices, setAllServices] = useState([]);
+  useEffect(() => {
+    API.getAllServices().then((services) => setAllServices(services));
+  }, []);
 
   return (
-   <>
-    <Router>
-      <Route path="/" render={() => <> <MyNav /> <HomeButtons/></>} />
-      <Route exact path="/admin" render={()=> <><AdminHomepage/> <NewCounter/></>}/>
-      <Route exact path="/officer" render={() => <><OfficerHomePage/></>} />
-      <Route exact path="/customer" render={() => <><TicketAcquisitionPage/></>} />
-    </Router>
-   </>
+    <>
+      <Router>
+        <Route path="/" render={() => <> <MyNav /> <HomeButtons /></>} />
+        <Route exact path="/admin" render={() => <><AdminHomepage /> <NewCounter /></>} />
+        <Route exact path="/officer" render={() => <><OfficerHomePage /></>} />
+        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices}/></>} />
+      </Router>
+    </>
   );
 }
 
