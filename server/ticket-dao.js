@@ -8,13 +8,11 @@ exports.getNewID = function (id_service) {
   let now = dayjs();
   return new Promise((resolve, reject) => {
     let sql = 'SELECT MAX(ticket_num) AS result FROM tickets_to_serve WHERE id_service = ? AND date = ?';
-    db.all(sql, [id_service, `${now.format('YYYY-MM-DD')}`], (err, rows) => {
+    db.get(sql, [id_service, `${now.format('YYYY-MM-DD')}`], (err, row) => {
       if (err)
         reject(err);
-      else {
-        console.log(rows.map(record => record.result)[0]);
-        resolve(rows.map(record => record.result)[0] + 1);
-      }
+      if(!row.result) resolve(1)
+      else resolve(row.result+1)      
     });
   });
 }

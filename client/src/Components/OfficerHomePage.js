@@ -10,14 +10,15 @@ function OfficerHomePage(props) {
     return (<>
         {/* Contenitore */}
         <Container className="justify-content-center pt-5 mt-5">
+        <h1 className="text-center">Welcome, Officer.</h1>
             <Card className="text-left">
                 <Card.Header as="h5">List of officer</Card.Header>
                 {/* Intestazione */}
                 {/* Corpo */}
                 < Card.Body >
                     <Container>
-                        {officers.map((officer) => 
-                            <ViewOfficer counter={officer.counter} nameOfficer={officer.nameOfficer} codeTicket={officer.codeTicket} /> )}
+                        {officers.map((officer, index) => 
+                            <ViewOfficer key={index} counter={officer.counter} nameOfficer={officer.nameOfficer} codeTicket={officer.codeTicket} /> )}
                     </Container>
                 </Card.Body >
             </Card >

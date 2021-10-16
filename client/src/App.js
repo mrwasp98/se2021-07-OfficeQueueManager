@@ -14,15 +14,19 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [allServices, setAllServices] = useState([]);
+  const [dirty, setDirty] = useState(true);
   useEffect(() => {
-    API.getAllServices().then((services) => setAllServices(services));
-  }, []);
+    if(dirty){
+      API.getAllServices().then((services) => setAllServices(services));
+    }
+    setDirty(false);
+  }, [dirty]);
 
   return (
     <>
       <Router>
         <Route path="/" render={() => <> <MyNav /> <HomeButtons /></>} />
-        <Route exact path="/admin" render={() => <><AdminHomepage /> <NewCounter /></>} />
+        <Route exact path="/admin" render={() => <><AdminHomepage setDirty={setDirty} /> <NewCounter /></>} />
         <Route exact path="/officer" render={() => <><OfficerHomePage /></>} />
         <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices}/></>} />
       </Router>
