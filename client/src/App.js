@@ -15,18 +15,27 @@ import { useEffect, useState } from "react";
 function App() {
   const [allServices, setAllServices] = useState([]);
   const [allOfficers, setAllOfficers] = useState([]);
+  const [flagOfficer, setFlagOfficer] = useState([]);
+
   useEffect(() => {
     API.getAllServices().then((services) => setAllServices(services));
-    API.getActiveOfficers().then((officer) => setAllOfficers(officer));
+
   }, []);
+
+  useEffect(() => {
+    if (flagOfficer) {
+      setFlagOfficer(false);
+      API.getActiveOfficers().then((officer) => setAllOfficers(officer));
+    }
+  }, [flagOfficer]);
 
   return (
     <>
       <Router>
         <Route path="/" render={() => <> <MyNav /> <HomeButtons /></>} />
         <Route exact path="/admin" render={() => <><AdminHomepage /> <NewCounter /></>} />
-        <Route exact path="/officer" render={() => <><OfficerHomePage officers={allOfficers} /></>} />
-        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices}/></>} />
+        <Route exact path="/officer" render={() => <><OfficerHomePage officers={allOfficers} setFlagOfficer={() => setFlagOfficer(true)} /></>} />
+        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices} /></>} />
       </Router>
     </>
   );
