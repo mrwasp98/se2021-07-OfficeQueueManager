@@ -6,7 +6,7 @@ const { check, validationResult } = require('express-validator');
 const serviceDao = require('./service-dao');
 const counterDao = require('./counter-dao');
 const ticketDao = require('./ticket-dao');
-const officerId = require('./officer-dao');
+const officerDao = require('./officer-dao');
 
 // init express
 const app = new express();
