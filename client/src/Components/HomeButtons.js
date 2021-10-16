@@ -11,7 +11,7 @@ export default function HomeButtons(props) {
                             <Link style={{minWidth:"33%", textDecoration: "none" }} to="/admin" className="btn-secondary text-center">
                                 <Button variant="secondary" style={{minWidth:"100%"}} className="mx-auto" size="lg">Admin</Button>
                             </Link>
-                            <Link style={{minWidth:"35%", textDecoration: "none" }} to="/"  className="btn-secondary text-center">
+                            <Link style={{minWidth:"35%", textDecoration: "none" }} to="/officer"  className="btn-secondary text-center">
                                 <Button variant="secondary" style={{minWidth:"100%"}} className="mx-auto" size="lg" >Officer</Button>
                             </Link>
                             <Link style={{minWidth:"33%", textDecoration: "none" }} to="/customer"  className="btn-secondary text-center">

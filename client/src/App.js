@@ -14,8 +14,10 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [allServices, setAllServices] = useState([]);
+  const [allOfficers, setAllOfficers] = useState([]);
   useEffect(() => {
     API.getAllServices().then((services) => setAllServices(services));
+    API.getActiveOfficers().then((officer) => setAllOfficers(officer));
   }, []);
 
   return (
@@ -23,7 +25,7 @@ function App() {
       <Router>
         <Route path="/" render={() => <> <MyNav /> <HomeButtons /></>} />
         <Route exact path="/admin" render={() => <><AdminHomepage /> <NewCounter /></>} />
-        <Route exact path="/officer" render={() => <><OfficerHomePage /></>} />
+        <Route exact path="/officer" render={() => <><OfficerHomePage officers={allOfficers} /></>} />
         <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices}/></>} />
       </Router>
     </>
