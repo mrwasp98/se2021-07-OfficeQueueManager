@@ -32,16 +32,14 @@ const addService = (tagName, serviceTime) => {
           "content-type": "application/json",
         },
         body: JSON.stringify({counterNum: counterNum, services: services})
-      })
-        .then((res) => {
+      }).then((res) => {
           if (!res.ok) {
             const error = new Error(`${res.status}: ${res.statusText}`);
             error.response = res;
             throw error;
           }
           resolve(res.json());
-        })
-        .catch((err) => {
+        }).catch((err) => {
             reject({ message: err.message });
         });
     });
