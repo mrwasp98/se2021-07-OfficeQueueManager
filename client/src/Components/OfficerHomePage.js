@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import API from "../API/PutAPI.js"
 
+const STATUS_OFFICER = "waiting"
+
 function OfficerHomePage(props) {
     const { officers, setFlagOfficer } = props;
 
@@ -20,7 +22,7 @@ function OfficerHomePage(props) {
                 < Card.Body >
                     <Container>
                         {officers.map((officer) =>
-                            <ViewOfficer officerId={officer.officerId} counter={officer.counter} name={officer.name} codeTicket={"A01"} setFlagOfficer={setFlagOfficer}/>)}
+                            <ViewOfficer officerId={officer.officerId} counter={officer.counter} name={officer.name} codeTicket={officer.status === STATUS_OFFICER ? "" : "A01"} setFlagOfficer={setFlagOfficer} />)}
                     </Container>
                 </Card.Body >
             </Card >
@@ -32,7 +34,6 @@ function OfficerHomePage(props) {
 function ViewOfficer(props) {
     const { officerId, counter, name, codeTicket, setFlagOfficer } = props;
     const TEXT_BUTTON = "Complete";
-    const STATUS_OFFICER = "waiting"
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -43,8 +44,8 @@ function ViewOfficer(props) {
         API.updateOfficerStatus(officerId, STATUS_OFFICER)
             .then(() => setLoading(false))
             .catch(res => setError(res.message))
-        
-            setFlagOfficer(); // Flag per interrogare il db
+
+        setFlagOfficer(); // Flag per interrogare il db
     }
 
     return (<>

@@ -12,7 +12,7 @@ exports.getActOfficers = () => {
                 reject(err);
                 return;
             }
-            const officers = rows.map((o) => ({officerId: o.officerId, name: o.name, counter: o.counterId}));
+            const officers = rows.map((o) => ({officerId: o.officerId, name: o.name, status: o.status, counter: o.counterId}));
             resolve(officers);
         });
     });
