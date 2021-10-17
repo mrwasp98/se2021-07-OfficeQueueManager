@@ -97,7 +97,7 @@ app.get('/api/services',
 //get served customers
 app.get('/api/Customer',
 async (req, res) => { 
-  ticketDao.getServedCustomer()
+  ticketDao.getEstimateTime()
   .then(names => res.json(names))
   .catch(() => res.status(500).end());
 });

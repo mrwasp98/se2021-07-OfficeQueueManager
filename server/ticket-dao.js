@@ -72,9 +72,9 @@ exports.createTicketServed = function (ticket_num,id_service,date,start_time,end
   });
 }
 
-exports.getServedCustomer = () => {
-  return new Promise((resolve, reject) => {console.log("today" + dayjs(new Date()).format('YYYY-MM-DD'));
-      const sql = 'SELECT * FROM tickets_served where date = ?';
+exports.getEstimateTime = () => {
+  return new Promise((resolve, reject) => {
+      const sql = 'select sum(service_time) as EstimateTime, count() as InLinePerson from tickets_to_serve ts, services s where s.id=ts.id_service and ts.date = ?';
       db.all(sql, [dayjs(new Date()).format('YYYY-MM-DD')], (err, rows) => {
           if (err) {
               reject(err);
@@ -84,3 +84,16 @@ exports.getServedCustomer = () => {
       });
   });
 };
+
+// exports.getServedCustomer = () => {
+//   return new Promise((resolve, reject) => {console.log("today" + dayjs(new Date()).format('YYYY-MM-DD'));
+//       const sql = 'SELECT * FROM tickets_served where date = ?';
+//       db.all(sql, [dayjs(new Date()).format('YYYY-MM-DD')], (err, rows) => {
+//           if (err) {
+//               reject(err);
+//               return;
+//           }
+//           resolve(rows);
+//       });
+//   });
+// };
