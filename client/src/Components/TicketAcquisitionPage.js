@@ -37,7 +37,7 @@ export default function TicketAcquisitionPage(props) {
                         If you want to <b>be served</b>, this is the right place.
                     </Card.Text>
 
-                    <Alert key={1} variant={'success'}>The Estimate Time :{props.estimation[0].EstimateTime}</Alert>
+                    <Alert key={1} variant={'success'}>The Estimate Time :   {props.estimation[0].EstimateTime} min</Alert>
                     <Alert key={2} variant={'info'}> The number of people in front of you:  {props.estimation[0].InLinePerson}</Alert>
                     <Form onSubmit={handleSubmit} >
                         <Row>
