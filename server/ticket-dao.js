@@ -71,3 +71,16 @@ exports.createTicketServed = function (ticket_num,id_service,date,start_time,end
     });
   });
 }
+
+exports.getServedCustomer = () => {
+  return new Promise((resolve, reject) => {console.log("today" + dayjs(new Date()).format('YYYY-MM-DD'));
+      const sql = 'SELECT * FROM tickets_served where date = ?';
+      db.all(sql, [dayjs(new Date()).format('YYYY-MM-DD')], (err, rows) => {
+          if (err) {
+              reject(err);
+              return;
+          }
+          resolve(rows);
+      });
+  });
+};

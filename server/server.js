@@ -94,6 +94,16 @@ app.get('/api/services',
   });
 
   
+//get served customers
+app.get('/api/Customer',
+async (req, res) => { 
+  ticketDao.getServedCustomer()
+  .then(names => res.json(names))
+  .catch(() => res.status(500).end());
+});
+
+
+  
 //insert served tickets
 app.post('/api/ticket', async (req, res) =>{
   const ticket_num = req.body.ticket_num;
