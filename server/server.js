@@ -94,6 +94,16 @@ app.get('/api/services',
   });
 
   
+//it return Number of people in line and estimate time for standing in the line
+app.get('/api/Customer',
+async (req, res) => { 
+  ticketDao.getEstimateTime()
+  .then(names => res.json(names))
+  .catch(() => res.status(500).end());
+});
+
+
+  
 //insert served tickets
 app.post('/api/ticket', async (req, res) =>{
   const ticket_num = req.body.ticket_num;
