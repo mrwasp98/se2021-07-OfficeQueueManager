@@ -14,12 +14,19 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [allServices, setAllServices] = useState([]);
+  const [estimation, setEstimation] = useState([]);
 
   const [allOfficers, setAllOfficers] = useState([]);
   const [flagOfficer, setFlagOfficer] = useState([]);
   const [dirty, setDirty] = useState(true);
   useEffect(() => {
     API.getAllServices().then((services) => setAllServices(services));
+
+  }, []);
+
+  useEffect(() => {console.log("estimation");
+    API.getServedClients().then((estimation) => setEstimation(estimation));
+    console.log({estimation});
 
   }, []);
 
@@ -36,7 +43,7 @@ function App() {
         <Route path="/" render={() => <> <MyNav /> <HomeButtons /></>} />
         <Route exact path="/admin" render={() => <><AdminHomepage /> <NewCounter services={allServices}/></>} />
         <Route exact path="/officer" render={() => <><OfficerHomePage /></>} />
-        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices}/></>} />
+        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices} estimation={estimation}/></>} />
       </Router>
     </>
   );

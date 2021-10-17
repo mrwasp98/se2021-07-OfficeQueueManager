@@ -94,7 +94,7 @@ app.get('/api/services',
   });
 
   
-//get served customers
+//it return Number of people in line and estimate time for standing in the line
 app.get('/api/Customer',
 async (req, res) => { 
   ticketDao.getEstimateTime()
