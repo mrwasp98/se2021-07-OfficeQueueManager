@@ -11,10 +11,6 @@ export default function NewCounter(props){
     const [counterNum, setCounterNum] = useState();
     const [servicesChosen, setServicesChosen] = useState([]);
 
-    // when a service is checked this useEffect render the form so when I will click on the submit i send to server a correct list
-    useEffect(()=>{
-        
-    }, [servicesChosen])
 
     const handleSubmit = (event) => {
         setError("");           
@@ -24,8 +20,6 @@ export default function NewCounter(props){
         event.stopPropagation();
 
         let valid = true;
-        console.log(counterNum)
-        console.log(servicesChosen.length)
         if(counterNum == 0){
             valid = false;
             setError("Cannot exists a counter with 0");
