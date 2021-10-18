@@ -69,8 +69,6 @@ function ViewOfficer(props) {
                 .catch(res => setError(res.message))
 
             setFlagOfficer(); // Flag to update the list of officer
-
-            alert(`the officer ${name} had finish to serve the customer. Your state is ${STATUS_OFFICER}`);
         }
     }
 
