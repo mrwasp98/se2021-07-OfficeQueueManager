@@ -19,16 +19,26 @@ function App() {
   const [allOfficers, setAllOfficers] = useState([]);
   const [flagOfficer, setFlagOfficer] = useState([]);
   const [dirty, setDirty] = useState(true);
+
   useEffect(() => {
-    if(dirty){
+    if (flagOfficer) {
+      setFlagOfficer(false);
+      API.getAllServices().then((officers) => setAllOfficers(officers))  
+    }
+    
+  }, []);
+
+  useEffect(() => {
+    if (dirty) {
       API.getAllServices().then((services) => setAllServices(services));
       setDirty(false);
     }
   }, [dirty]);
 
-  useEffect(() => {console.log("estimation");
+  useEffect(() => {
+    console.log("estimation");
     API.getServedClients().then((estimation) => setEstimation(estimation));
-    console.log({estimation});
+    console.log({ estimation });
 
   }, []);
 
@@ -43,9 +53,9 @@ function App() {
     <>
       <Router>
         <Route path="/" render={() => <> <MyNav /> <HomeButtons /></>} />
-        <Route exact path="/admin" render={() => <><AdminHomepage setDirty={setDirty} /> <NewCounter services={allServices}/></>} />
-        <Route exact path="/officer" render={() => <><OfficerHomePage officers={allOfficers}/></>} />
-        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices} estimation={estimation}/></>} />
+        <Route exact path="/admin" render={() => <><AdminHomepage setDirty={setDirty} /> <NewCounter services={allServices} /></>} />
+        <Route exact path="/officer" render={() => <><OfficerHomePage officers={allOfficers} setFlagOfficer={() => setFlagOfficer(true)} /></>} />
+        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices} estimation={estimation} /></>} />
       </Router>
     </>
   );
