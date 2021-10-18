@@ -2,7 +2,6 @@ import './App.css';
 import "bootstrap/dist/css/bootstrap.css";
 import MyNav from './Components/MyNav';
 import HomeButtons from './Components/HomeButtons';
-//import {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Route, } from "react-router-dom";
 
 import AdminHomepage from './Components/AdminHomepage';
@@ -43,9 +42,9 @@ function App() {
     console.log({ estimation });
   },[]);
 
-  useEffect(() => { 
+ /* useEffect(() => { 
     API.getWhoIsLastOne().then((lastOne) => setLastOne(lastOne));
-  }, []);
+  }, []);*/
 
   useEffect(() => {
     if (flagOfficer) {
