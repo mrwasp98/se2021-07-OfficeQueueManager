@@ -15,19 +15,26 @@ import { useEffect, useState } from "react";
 function App() {
   const [allServices, setAllServices] = useState([]);
   const [estimation, setEstimation] = useState([]);
+  const [nextOne, setNextOne] = useState([]);
+  const [lastOne, setLastOne] = useState([]);
 
   const [allOfficers, setAllOfficers] = useState([]);
   const [flagOfficer, setFlagOfficer] = useState([]);
   const [dirty, setDirty] = useState(true);
   useEffect(() => {
     API.getAllServices().then((services) => setAllServices(services));
-
   }, []);
 
-  useEffect(() => {console.log("estimation");
+  useEffect(() => {
     API.getServedClients().then((estimation) => setEstimation(estimation));
-    console.log({estimation});
+  }, []);
 
+  useEffect(() => { 
+    API.getWhoIsNext().then((nextOne) => setNextOne(nextOne));
+  }, []);
+
+  useEffect(() => { 
+    API.getWhoIsLastOne().then((lastOne) => setLastOne(lastOne));
   }, []);
 
   useEffect(() => {
@@ -43,7 +50,7 @@ function App() {
         <Route path="/" render={() => <> <MyNav /> <HomeButtons /></>} />
         <Route exact path="/admin" render={() => <><AdminHomepage /> <NewCounter services={allServices}/></>} />
         <Route exact path="/officer" render={() => <><OfficerHomePage /></>} />
-        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices} estimation={estimation}/></>} />
+        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices} estimation={estimation} nextOne={nextOne} lastOne={lastOne}/></>} />
       </Router>
     </>
   );

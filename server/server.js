@@ -102,6 +102,21 @@ async (req, res) => {
   .catch(() => res.status(500).end());
 });
 
+app.get('/api/ServedCustomer',
+async (req, res) => { 
+  ticketDao.getServedCustomer()
+  .then(names => res.json(names))
+  .catch(() => res.status(500).end());
+});
+
+
+app.get('/api/NextServeCustomer',
+async (req, res) => { 
+  ticketDao.getNextCustomerInLine()
+  .then(names => res.json(names))
+  .catch(() => res.status(500).end());
+});
+
 
   
 //insert served tickets

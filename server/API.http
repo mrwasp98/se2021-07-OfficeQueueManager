@@ -38,3 +38,11 @@ GET http://localhost:3001/api/services HTTP/1.1
 ###
 
 GET http://localhost:3001/api/Customer HTTP/1.1
+
+###
+
+GET http://localhost:3001/api/NextServeCustomer HTTP/1.1
+
+###
+
+GET http://localhost:3001/api/ServedCustomer HTTP/1.1

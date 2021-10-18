@@ -85,15 +85,28 @@ exports.getEstimateTime = () => {
   });
 };
 
-// exports.getServedCustomer = () => {
-//   return new Promise((resolve, reject) => {console.log("today" + dayjs(new Date()).format('YYYY-MM-DD'));
-//       const sql = 'SELECT * FROM tickets_served where date = ?';
-//       db.all(sql, [dayjs(new Date()).format('YYYY-MM-DD')], (err, rows) => {
-//           if (err) {
-//               reject(err);
-//               return;
-//           }
-//           resolve(rows);
-//       });
-//   });
-// };
+exports.getServedCustomer = () => {
+  return new Promise((resolve, reject) => {
+      const sql = 'SELECT f.counterId,ts.ticket_num FROM tickets_served ts,officers f where f.officerId =ts.id_officer and date = ?';
+      db.all(sql, [dayjs(new Date()).format('YYYY-MM-DD')], (err, rows) => {
+          if (err) {
+              reject(err);
+              return;
+          }
+          resolve(rows);
+      });
+  });
+};
+
+exports.getNextCustomerInLine = () => {
+  return new Promise((resolve, reject) => {
+      const sql = 'SELECT min(ticket_num) as NextOne FROM tickets_to_serve where date = ?';
+      db.all(sql, [dayjs(new Date()).format('YYYY-MM-DD')], (err, rows) => {
+          if (err) {
+              reject(err);
+              return;
+          }
+          resolve(rows);
+      });
+  });
+};
