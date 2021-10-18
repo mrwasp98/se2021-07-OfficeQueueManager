@@ -135,6 +135,7 @@ app.post('/api/ticket', async (req, res) => {
 
 })
 
+//put status of the officer
 app.put('/api/officer/:officerId/status/:stat', async (req, res) => {
   try {
     await officerDao.updateStatus(req.params.officerId, req.params.stat);

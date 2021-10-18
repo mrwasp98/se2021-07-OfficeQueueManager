@@ -1,5 +1,8 @@
+// PutAPI.js: API to put information on the DB
+// Implements by Riccardo and Francesco
+// Date update: 18/10/2021
 
-
+// API to update the staus of the officer
 async function updateOfficerStatus(officerId, stat) {
     const response = await fetch('/api/officer/' + officerId + '/status/' + stat, {
         method: 'PUT',

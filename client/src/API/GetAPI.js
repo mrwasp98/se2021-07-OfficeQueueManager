@@ -20,6 +20,7 @@ const getAllServices = () => {
   });
 }
 
+// API to get the officers that are working/waiting
 const getActiveOfficers = () => {
   return new Promise((resolve, reject) => {
     fetch('/api/officers', {
