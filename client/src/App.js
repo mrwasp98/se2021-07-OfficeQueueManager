@@ -41,6 +41,7 @@ function App() {
     console.log("estimation");
     API.getServedClients().then((estimation) => setEstimation(estimation));
     console.log({ estimation });
+  },[]);
 
   useEffect(() => { 
     API.getWhoIsLastOne().then((lastOne) => setLastOne(lastOne));
