@@ -63,7 +63,6 @@ function ViewOfficer(props) {
     const handleSubmit = (event) => {
         setError("");
 
-        console.log(status)
         if (status !== WAITING_CODETICKET) {
             API.updateOfficerStatus(officerId, WAITING_CODETICKET)
                 .then(() => setLoading(false))
