@@ -75,12 +75,13 @@ exports.createTicketServed = function (ticket_num,id_service,date,start_time,end
 exports.getEstimateTime = () => {
   return new Promise((resolve, reject) => {
       const sql = 'select sum(service_time) as EstimateTime, count() as InLinePerson from tickets_to_serve ts, services s where s.id=ts.id_service and ts.date = ?';
-      db.all(sql, [dayjs(new Date()).format('YYYY-MM-DD')], (err, rows) => {
+      db.get(sql, [dayjs(new Date()).format('YYYY-MM-DD')], (err, rows) => {
           if (err) {
               reject(err);
               return;
           }
-          resolve(rows);
+          const estimate = {EstimateTime: rows.EstimateTime, InLinePerson: rows.InLinePerson};
+          resolve(estimate);
       });
   });
 };
