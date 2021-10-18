@@ -24,14 +24,14 @@ const addService = (tagName, serviceTime) => {
     });
   }
 
-  const addCounter = (counterNum, services) => {
+  const addCounter = (services) => {
     return new Promise((resolve, reject) => {
       fetch('/api/counters', {
         method: "POST",
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({counterNum: counterNum, services: services})
+        body: JSON.stringify({services: JSON.stringify(services)})
       }).then((res) => {
           if (!res.ok) {
             const error = new Error(`${res.status}: ${res.statusText}`);

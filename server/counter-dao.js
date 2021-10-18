@@ -14,3 +14,15 @@ exports.createCounter = (counterId, serviceId) => {
         });
     });
 };
+
+exports.getNewCounterID = function () {
+    return new Promise((resolve, reject) => {
+      let sql = 'SELECT MAX(counterId) AS result FROM counter_service';
+      db.get(sql, [], (err, row) => {
+        if (err)
+          reject(err);
+        if(!row.result) resolve(1)
+        else resolve(row.result+1)      
+      });
+    });
+  }
