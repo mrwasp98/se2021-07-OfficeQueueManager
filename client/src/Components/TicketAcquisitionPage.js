@@ -40,8 +40,9 @@ export default function TicketAcquisitionPage(props) {
                         <Row>
                             <Form.Control as="select" aria-label="Default select example"
                                 onChange={(e) => setService(e.target.value)}
-                                disabled={ticketId ? true : false}>
-                                <option disabled selected>Please, choose one of the following services </option>
+                                disabled={ticketId ? true : false}
+                                defaultValue={0}>
+                                <option>Please, choose one of the following services </option>
                                 {props.services.map((option, indeoption) => (
                                     <option key={indeoption} value={option}>{option}</option>
                                 ))}
