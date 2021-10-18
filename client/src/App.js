@@ -20,9 +20,11 @@ function App() {
   const [flagOfficer, setFlagOfficer] = useState([]);
   const [dirty, setDirty] = useState(true);
   useEffect(() => {
-    API.getAllServices().then((services) => setAllServices(services));
-
-  }, []);
+    if(dirty){
+      API.getAllServices().then((services) => setAllServices(services));
+      setDirty(false);
+    }
+  }, [dirty]);
 
   useEffect(() => {console.log("estimation");
     API.getServedClients().then((estimation) => setEstimation(estimation));
@@ -41,7 +43,7 @@ function App() {
     <>
       <Router>
         <Route path="/" render={() => <> <MyNav /> <HomeButtons /></>} />
-        <Route exact path="/admin" render={() => <><AdminHomepage /> <NewCounter services={allServices}/></>} />
+        <Route exact path="/admin" render={() => <><AdminHomepage setDirty={setDirty} /> <NewCounter services={allServices}/></>} />
         <Route exact path="/officer" render={() => <><OfficerHomePage officers={allOfficers}/></>} />
         <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices} estimation={estimation}/></>} />
       </Router>

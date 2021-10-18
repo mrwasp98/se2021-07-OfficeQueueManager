@@ -61,7 +61,7 @@ export default function NewCounter(props){
                 Select services that new counter can serve 
 
                 <Row className="mb-3">
-                    {props.services.map( s => <Service service={s} servicesChosen={servicesChosen} setServicesChosen={setServicesChosen}>  </Service>)}
+                    {props.services.map( (s, i) => <Service service={s} key = {i} servicesChosen={servicesChosen} setServicesChosen={setServicesChosen}>  </Service>)}
                 </Row>
 
                 <Row className="justify-content-end">

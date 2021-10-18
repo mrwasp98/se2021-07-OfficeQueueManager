@@ -36,9 +36,6 @@ export default function TicketAcquisitionPage(props) {
                     <Card.Text>
                         If you want to <b>be served</b>, this is the right place.
                     </Card.Text>
-
-                    <Alert key={1} variant={'success'}>The Estimate Time :   {props.estimation[0].EstimateTime} min</Alert>
-                    <Alert key={2} variant={'info'}> The number of people in front of you:  {props.estimation[0].InLinePerson}</Alert>
                     <Form onSubmit={handleSubmit} >
                         <Row>
                             <Form.Control as="select" aria-label="Default select example"
@@ -65,6 +62,13 @@ export default function TicketAcquisitionPage(props) {
                         <h1>{ticketId}</h1>
                     </Card.Footer>}
             </Card>
+
+            {ticketId && <Card className="text-center">
+                <Card.Body>
+                    <Alert key={1} variant={'success'}>The Estimate Time :   {props.estimation[0].EstimateTime} min</Alert>
+                    <Alert key={2} variant={'info'}> The number of people in front of you:  {props.estimation[0].InLinePerson}</Alert>
+                </Card.Body>
+            </Card>}
         </Container>
     );
 }
