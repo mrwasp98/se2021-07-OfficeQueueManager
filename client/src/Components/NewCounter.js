@@ -46,7 +46,7 @@ export default function NewCounter(props){
     }
   
 
-    return (<Container className="justify-content-center pt-5 mt-5">
+    return (<Container className="justify-content-center pt-5 mt-2 mb-4">
             <Card className="text-center">
             <Card.Body>
                 <Card.Text>

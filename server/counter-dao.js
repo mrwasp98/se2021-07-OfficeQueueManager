@@ -10,7 +10,7 @@ exports.createCounter = (counterId, serviceId) => {
                 reject(err);
                 return;
             }
-            resolve();
+            resolve(counterId);
         });
     });
 };
