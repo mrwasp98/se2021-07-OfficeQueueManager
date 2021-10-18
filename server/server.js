@@ -135,11 +135,6 @@ app.post('/api/ticket', async (req, res) => {
 
 })
 
-// activate the server
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-});
-
 app.put('/api/officer/:officerId/status/:stat', async (req, res) => {
   try {
     await officerDao.updateStatus(req.params.officerId, req.params.stat);
@@ -147,4 +142,9 @@ app.put('/api/officer/:officerId/status/:stat', async (req, res) => {
   } catch (err) {
     res.status(503).json({ error: `Database error ${err}.` });
   }
+});
+
+// activate the server
+app.listen(port, () => {
+  console.log(`Server listening at http://localhost:${port}`);
 });

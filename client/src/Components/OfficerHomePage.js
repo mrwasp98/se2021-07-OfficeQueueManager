@@ -7,8 +7,8 @@ import { useState } from "react";
 import API from "../API/PutAPI.js"
 
 // Constants
-const STATUS_OFFICER = "waiting";
-const WAITING_CODETICKET = "- --";
+const STATUS_OFFICER = "working";
+const WAITING_CODETICKET = "waiting";
 
 // Main functions
 function OfficerHomePage(props) {
@@ -19,7 +19,7 @@ function OfficerHomePage(props) {
 
     return (<>
         {/* Main containter */}
-        <Container className="justify-content-center pt-5 mt-5">
+        <Container className="justify-content-center pt-5 mt-3">
             <h1 className="text-center">Welcome, Officer.</h1>
 
             {/* Card to show the list of officers */}
@@ -33,7 +33,7 @@ function OfficerHomePage(props) {
                             <ViewOfficer officerId={officer.officerId}
                                 counter={officer.counter}
                                 name={officer.name}
-                                codeTicket={officer.status === STATUS_OFFICER ? WAITING_CODETICKET : "A 01"}
+                                status={officer.status === STATUS_OFFICER ? STATUS_OFFICER : WAITING_CODETICKET}
                                 setFlagOfficer={setFlagOfficer} />)}
                     </Container>
                 </Card.Body >
@@ -51,9 +51,9 @@ function ViewOfficer(props) {
     // - name: name of officer
     // - codeTicket: numbero of ticket that officer is serving in this moment
     // - setFlagOfficer: function that allow to update the information about officers 
-    const { officerId, counter, name, codeTicket, setFlagOfficer } = props;
+    const { officerId, counter, name, status, setFlagOfficer } = props;
 
-    const TEXT_BUTTON = "Complete";
+    const TEXT_BUTTON = "Call Next";
 
     // UseState
     const [error, setError] = useState("");
@@ -63,7 +63,7 @@ function ViewOfficer(props) {
     const handleSubmit = (event) => {
         setError("");
 
-        if (codeTicket !== WAITING_CODETICKET) {
+        if (status !== WAITING_CODETICKET) {
             API.updateOfficerStatus(officerId, STATUS_OFFICER)
                 .then(() => setLoading(false))
                 .catch(res => setError(res.message))
@@ -74,16 +74,11 @@ function ViewOfficer(props) {
 
     return (<>
         <Row key={`row${officerId}`} style={{ "padding": "15px" }}>
-            <Col md="1">{counter}</Col>
-            <Col md="6">{name}</Col>
-            <Col md="3">{codeTicket}</Col>
-            <Col md="2">
-                {' '}
-                {codeTicket !== WAITING_CODETICKET ?
-                    <> <Button variant="secondary" type="submit" onClick={handleSubmit}>{TEXT_BUTTON}</Button> </> :
-                    <></>}
-                {' '}
-
+            <Col md="3">{"counterId: " + counter}</Col>
+            <Col md="3">{"Name: " + name}</Col>
+            <Col md="3">{"Status: " + status}</Col>
+            <Col md="3">
+                <> <Button variant="secondary" type="submit" disabled={status !== WAITING_CODETICKET ? false : true} onClick={handleSubmit}>{TEXT_BUTTON}</Button> </>
             </Col>
         </Row>
 

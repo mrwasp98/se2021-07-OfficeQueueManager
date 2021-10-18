@@ -50,12 +50,12 @@ export default function NewCounter(props) {
                 <Form onSubmit={handleSubmit}>
                     Select services that new counter can serve
 
-                    {props.services.map(s => <Row className="mb-1"><Service service={s} servicesChosen={servicesChosen} setServicesChosen={setServicesChosen}>  </Service></Row>)}
+                    {props.services.map(s => <Row className="mb-1 ml-2"><Service service={s} servicesChosen={servicesChosen} setServicesChosen={setServicesChosen}>  </Service></Row>)}
 
                     <Row className="justify-content-end">
                         {loading && (<Alert variant="info" className="mb-0 mr-1"> Now adding</Alert>)}
                         {error && (<Alert variant="danger" className="mb-0 mr-1"> {error}</Alert>)}
-                        <Button variant="outline-dark" type="submit">Add Counter</Button>
+                        <Button variant="outline-dark" type="submit" className="mr-3">Add Counter</Button>
                     </Row>
 
                 </Form>
