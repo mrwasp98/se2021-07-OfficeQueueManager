@@ -24,8 +24,6 @@ export default function NewCounter(props){
         event.stopPropagation();
 
         let valid = true;
-        console.log(counterNum)
-        console.log(servicesChosen.length)
         if(counterNum == 0){
             valid = false;
             setError("Cannot exists a counter with 0");

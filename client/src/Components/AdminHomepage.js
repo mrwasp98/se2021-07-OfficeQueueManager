@@ -55,6 +55,7 @@ export default function AdminHomepage(props) {
                                     onChange={(x) => setServiceTime(x.target.value)}
                                     value={serviceTime}
                                     step="0.1"
+                                    min={0.1}
                                     required
                                 />
                             </Form.Group>
