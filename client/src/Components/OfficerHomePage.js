@@ -1,29 +1,40 @@
-import { useState } from "react";
+// OfficerHomePage.js: point to access to view the Officers' interface
+// Implements by Riccardo
+// Date update: 18/10/2021
+
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { useState } from "react";
 import API from "../API/PutAPI.js"
 
-const STATUS_OFFICER = "waiting"
+// Constants
+const STATUS_OFFICER = "waiting";
+const WAITING_CODETICKET = "- --";
 
+// Main functions
 function OfficerHomePage(props) {
+    // Attributes
+    // - Officers: list of officers active in this moment
+    // - setFlagOfficer: function that allow to update the information about officers
     const { officers, setFlagOfficer } = props;
 
-    const copy_officers = [
-        { counter: 1, nameOfficer: "Riccardo", codeTicket: "A01" },
-        { counter: 2, nameOfficer: "Francesco", codeTicket: "A02" },
-        { counter: 4, nameOfficer: "Giacomo", codeTicket: "B01" }]
-
     return (<>
-        {/* Contenitore */}
+        {/* Main containter */}
         <Container className="justify-content-center pt-5 mt-5">
             <h1 className="text-center">Welcome, Officer.</h1>
+
+            {/* Card to show the list of officers */}
             <Card className="text-left">
                 <Card.Header as="h5">List of officer</Card.Header>
-                {/* Intestazione */}
-                {/* Corpo */}
+                {/* Body of card */}
                 < Card.Body >
                     <Container>
+                        {/* Show the list of officer */}
                         {officers.map((officer, index) =>
-                            <ViewOfficer key={index} officerId={officer.officerId} counter={officer.counter} name={officer.name} codeTicket={officer.status === STATUS_OFFICER ? "" : "A01"} setFlagOfficer={setFlagOfficer} />)}
+                            <ViewOfficer officerId={officer.officerId}
+                                counter={officer.counter}
+                                name={officer.name}
+                                codeTicket={officer.status === STATUS_OFFICER ? WAITING_CODETICKET : "A 01"}
+                                setFlagOfficer={setFlagOfficer} />)}
                     </Container>
                 </Card.Body >
             </Card >
@@ -32,30 +43,49 @@ function OfficerHomePage(props) {
 
 }
 
+// Function to view the officer
 function ViewOfficer(props) {
+    // Attributes
+    // - officerId: identifier of officer
+    // - counter: number to rappresent the number of desk in the office
+    // - name: name of officer
+    // - codeTicket: numbero of ticket that officer is serving in this moment
+    // - setFlagOfficer: function that allow to update the information about officers 
     const { officerId, counter, name, codeTicket, setFlagOfficer } = props;
+
     const TEXT_BUTTON = "Complete";
 
+    // UseState
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
+    // Function that is execute when the officer finish to serve the customer (click the botton) 
     const handleSubmit = (event) => {
         setError("");
 
-        API.updateOfficerStatus(officerId, STATUS_OFFICER)
-            .then(() => setLoading(false))
-            .catch(res => setError(res.message))
+        if (codeTicket !== WAITING_CODETICKET) {
+            API.updateOfficerStatus(officerId, STATUS_OFFICER)
+                .then(() => setLoading(false))
+                .catch(res => setError(res.message))
 
-        setFlagOfficer(); // Flag per interrogare il db
+            setFlagOfficer(); // Flag to update the list of officer
+
+            alert(`the officer ${name} had finish to serve the customer. Your state is ${STATUS_OFFICER}`);
+        }
     }
 
     return (<>
-        <Row style={{ "padding": "15px" }}>
+        <Row key={`row${officerId}`} style={{ "padding": "15px" }}>
             <Col md="1">{counter}</Col>
             <Col md="6">{name}</Col>
             <Col md="3">{codeTicket}</Col>
             <Col md="2">
-                {' '}<Button variant="secondary" type="submit" onClick={handleSubmit}>{TEXT_BUTTON}</Button>{' '}
+                {' '}
+                {codeTicket !== WAITING_CODETICKET ?
+                    <> <Button variant="secondary" type="submit" onClick={handleSubmit}>{TEXT_BUTTON}</Button> </> :
+                    <></>}
+                {' '}
+
             </Col>
         </Row>
 
