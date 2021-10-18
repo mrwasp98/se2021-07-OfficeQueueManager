@@ -20,8 +20,8 @@ function App() {
 
   useEffect(() => {
     if (flagOfficer) {
-      setFlagOfficer(false);
       API.getAllServices().then((officers) => setAllOfficers(officers))  
+      setFlagOfficer(false);
     }
     
   }, []);

@@ -4,10 +4,10 @@ const db = require('./database');
 
 exports.getActOfficers = () => {
     return new Promise((resolve, reject) => {
-        let busy='busy';
+        let working='working';
         let waiting='waiting';
         const sql = 'SELECT * FROM officers WHERE status=? OR status=?';
-        db.all(sql, [busy, waiting], (err, rows) => {
+        db.all(sql, [working, waiting], (err, rows) => {
             if(err) {
                 reject(err);
                 return;

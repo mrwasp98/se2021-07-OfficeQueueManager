@@ -30,7 +30,7 @@ function OfficerHomePage(props) {
                     <Container>
                         {/* Show the list of officer */}
                         {officers.map((officer, index) =>
-                            <ViewOfficer officerId={officer.officerId}
+                            <ViewOfficer key={`officer-${index}`} officerId={officer.officerId}
                                 counter={officer.counter}
                                 name={officer.name}
                                 status={officer.status === STATUS_OFFICER ? STATUS_OFFICER : WAITING_CODETICKET}
@@ -63,8 +63,9 @@ function ViewOfficer(props) {
     const handleSubmit = (event) => {
         setError("");
 
+        console.log(status)
         if (status !== WAITING_CODETICKET) {
-            API.updateOfficerStatus(officerId, STATUS_OFFICER)
+            API.updateOfficerStatus(officerId, WAITING_CODETICKET)
                 .then(() => setLoading(false))
                 .catch(res => setError(res.message))
 
@@ -72,18 +73,16 @@ function ViewOfficer(props) {
         }
     }
 
-    return (<>
+    return (
         <Row key={`row${officerId}`} style={{ "padding": "15px" }}>
             <Col md="3">{"counterId: " + counter}</Col>
             <Col md="3">{"Name: " + name}</Col>
-            <Col md="3">{"Status: " + status}</Col>
-            <Col md="3">
+            <Col md="4">{"Status: " + status}</Col>
+            <Col md="2">
                 <> <Button variant="secondary" type="submit" disabled={status !== WAITING_CODETICKET ? false : true} onClick={handleSubmit}>{TEXT_BUTTON}</Button> </>
             </Col>
         </Row>
-
-
-    </>);
+    );
 
 }
 
