@@ -1,5 +1,5 @@
 // OfficerHomePage.js: point to access to view the Officers' interface
-// Implements by Riccardo
+// Implements by Riccardo and Francesco
 // Date update: 18/10/2021
 
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
@@ -13,7 +13,7 @@ const WAITING_CODETICKET = "waiting";
 // Main functions
 function OfficerHomePage(props) {
     // Attributes
-    // - Officers: list of officers active in this moment
+    // - officers: list of officers active in this moment
     // - setFlagOfficer: function that allow to update the information about officers
     const { officers, setFlagOfficer } = props;
 
@@ -59,7 +59,7 @@ function ViewOfficer(props) {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-    // Function that is execute when the officer finish to serve the customer (click the botton) 
+    // Function that is execute when the officer finish to serve the customer (click the bottom) 
     const handleSubmit = (event) => {
         setError("");
 
