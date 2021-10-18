@@ -64,7 +64,7 @@ export default function AdminHomepage(props) {
                         <Row className="justify-content-end">
                             {loading && (<Alert variant="info" className="mb-0 mr-1"> Now adding</Alert>)}
                             {error && (<Alert variant="danger" className="mb-0 mr-1"> {error}</Alert>)}
-                            <Button variant="outline-dark" type="submit">Add service</Button>
+                            <Button variant="outline-dark" type="submit" className="mr-3">Add service</Button>
                         </Row>
                     </Form>
                 </Card.Body>

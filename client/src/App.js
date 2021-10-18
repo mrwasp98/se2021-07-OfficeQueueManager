@@ -14,9 +14,6 @@ import { useEffect, useState } from "react";
 function App() {
   const [allServices, setAllServices] = useState([]);
   const [estimation, setEstimation] = useState([]);
-  const [nextOne, setNextOne] = useState([]);
-  const [lastOne, setLastOne] = useState([]);
-
   const [allOfficers, setAllOfficers] = useState([]);
   const [flagOfficer, setFlagOfficer] = useState([]);
   const [dirty, setDirty] = useState(true);
