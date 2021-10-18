@@ -21,17 +21,26 @@ function App() {
   const [allOfficers, setAllOfficers] = useState([]);
   const [flagOfficer, setFlagOfficer] = useState([]);
   const [dirty, setDirty] = useState(true);
+
   useEffect(() => {
-    API.getAllServices().then((services) => setAllServices(services));
+    if (flagOfficer) {
+      setFlagOfficer(false);
+      API.getAllServices().then((officers) => setAllOfficers(officers))  
+    }
+    
   }, []);
 
   useEffect(() => {
+    if (dirty) {
+      API.getAllServices().then((services) => setAllServices(services));
+      setDirty(false);
+    }
+  }, [dirty]);
+
+  useEffect(() => {
+    console.log("estimation");
     API.getServedClients().then((estimation) => setEstimation(estimation));
-  }, []);
-
-  useEffect(() => { 
-    API.getWhoIsNext().then((nextOne) => setNextOne(nextOne));
-  }, []);
+    console.log({ estimation });
 
   useEffect(() => { 
     API.getWhoIsLastOne().then((lastOne) => setLastOne(lastOne));
@@ -48,9 +57,9 @@ function App() {
     <>
       <Router>
         <Route path="/" render={() => <> <MyNav /> <HomeButtons /></>} />
-        <Route exact path="/admin" render={() => <><AdminHomepage /> <NewCounter services={allServices}/></>} />
-        <Route exact path="/officer" render={() => <><OfficerHomePage /></>} />
-        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices} estimation={estimation} nextOne={nextOne} lastOne={lastOne}/></>} />
+        <Route exact path="/admin" render={() => <><AdminHomepage setDirty={setDirty} /> <NewCounter services={allServices} /></>} />
+        <Route exact path="/officer" render={() => <><OfficerHomePage officers={allOfficers} setFlagOfficer={() => setFlagOfficer(true)} /></>} />
+        <Route exact path="/customer" render={() => <><TicketAcquisitionPage services={allServices} estimation={estimation} /></>} />
       </Router>
     </>
   );
