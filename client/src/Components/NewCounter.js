@@ -1,7 +1,7 @@
 import { Card, Container, Alert, Row, Form, Button, Col} from "react-bootstrap";
 import { useEffect, useState } from "react";
 
-import Service from '../Components/Service';
+import Service from '../components/Service';
 
 import { addCounter } from "../API/PostAPI";
 

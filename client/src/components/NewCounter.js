@@ -1,22 +1,16 @@
 import { Card, Container, Alert, Row, Form, Button, Col} from "react-bootstrap";
 import { useEffect, useState } from "react";
 
-import Service from '../Components/Service';
+import Service from '../components/Service';
 
 import { addCounter } from "../API/PostAPI";
-import getAllServices  from "../API/GetAPI";
 
-export default function NewCounter(){
+export default function NewCounter(props){
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [counterNum, setCounterNum] = useState(0);
-    const [allServices, setAllServices] = useState([])
+    const [counterNum, setCounterNum] = useState();
     const [servicesChosen, setServicesChosen] = useState([]);
 
-    // when a service is checked this useEffect render the form so when I will click on the submit i send to server a correct list
-    useEffect(()=>{
-        
-    }, [servicesChosen])
 
     const handleSubmit = (event) => {
         setError("");           
@@ -24,32 +18,27 @@ export default function NewCounter(){
         const form = event.currentTarget;
         event.preventDefault();
         event.stopPropagation();
-        if (form.checkValidity() === true) {
-            setLoading(true)
-            addCounter(counterNum, servicesChosen)
-                .then(() => setLoading(false))
-                .catch(res => setError(res.message))
-                .finally(() => setLoading(false))
-            }
 
-        setCounterNum(0);
-        setServicesChosen([]);
+        let valid = true;
+        if(counterNum == 0){
+            valid = false;
+            setError("Cannot exists a counter with 0");
         }
-  
+        if(servicesChosen.length == 0){
+            valid = false;
+            setError("A counter must serve one o more services");
+        }
 
-    useEffect ( () => {
-        const getServices = async() => {
-            try {
-              const allServices = await getAllServices();
-              setAllServices(allServices);
-            } catch (err) {
-              console.error(err.error);        
-            }
-          }
-        getServices().then( () => {
-          setLoading(false);
-        })
-      }, []);
+        if (form.checkValidity() === true && valid === true) {
+                setLoading(true);
+                addCounter(counterNum, servicesChosen)
+                    .then(() => setLoading(false))
+                    .catch(res => setError(res.message))
+                    .finally(() => setLoading(false));
+                    setCounterNum();
+        }
+    }
+  
 
     return (<Container className="justify-content-center pt-5 mt-5">
             <Card className="text-center">
@@ -69,9 +58,10 @@ export default function NewCounter(){
                         />
                     </Form.Group>  
                 </Row>
+                Select services that new counter can serve 
 
                 <Row className="mb-3">
-                    {allServices.map( s => <Service service={s} servicesChosen={servicesChosen} setServicesChosen={setServicesChosen}>  </Service>)}
+                    {props.services.map( s => <Service service={s} servicesChosen={servicesChosen} setServicesChosen={setServicesChosen}>  </Service>)}
                 </Row>
 
                 <Row className="justify-content-end">

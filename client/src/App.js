@@ -1,14 +1,14 @@
 import './App.css';
 import "bootstrap/dist/css/bootstrap.css";
-import MyNav from './Components/MyNav';
-import HomeButtons from './Components/HomeButtons';
+import MyNav from './components/MyNav';
+import HomeButtons from './components/HomeButtons';
 //import {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Route, } from "react-router-dom";
 
-import AdminHomepage from './Components/AdminHomepage';
-import NewCounter from './Components/NewCounter';
-import OfficerHomePage from './Components/OfficerHomePage';
-import TicketAcquisitionPage from './Components/TicketAcquisitionPage';
+import AdminHomepage from './components/AdminHomepage';
+import NewCounter from './components/NewCounter';
+import OfficerHomePage from './components/OfficerHomePage';
+import TicketAcquisitionPage from './components/TicketAcquisitionPage';
 import API from "./API/GetAPI.js";
 import { useEffect, useState } from "react";
 
