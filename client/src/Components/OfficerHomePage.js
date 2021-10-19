@@ -63,26 +63,28 @@ function ViewOfficer(props) {
     const handleSubmit = (event) => {
         setError("");
 
-        if (status !== WAITING_CODETICKET) {
+        //if (status !== WAITING_CODETICKET) {
             API.updateOfficerStatus(officerId, WAITING_CODETICKET)
                 .then(() => setLoading(false))
+                .then(()=> API.updateTickets(officerId))
                 .catch(res => setError(res.message))
 
             setFlagOfficer(); // Flag to update the list of officer
-        }
+        //}
     }
 
     return (
-        <Row key={`row${officerId}`} style={{ "padding": "15px" }}>
+        <Row key={`row${officerId}`} style={{ "padding": "15px" }} className="d-flex justify-content-between">
             <Col md="3">{"counterId: " + counter}</Col>
             <Col md="3">{"Name: " + name}</Col>
-            <Col md="4">{"Status: " + status}</Col>
+            {/* <Col md="4">{"Status: " + status}</Col> */}
             <Col md="2">
-                <> <Button variant="secondary" type="submit" disabled={status !== WAITING_CODETICKET ? false : true} onClick={handleSubmit}>{TEXT_BUTTON}</Button> </>
+                <> <Button variant="secondary" type="submit" 
+                // disabled={status !== WAITING_CODETICKET ? false : true} 
+                onClick={handleSubmit}>{TEXT_BUTTON}</Button> </>
             </Col>
         </Row>
     );
-
 }
 
 export default OfficerHomePage;

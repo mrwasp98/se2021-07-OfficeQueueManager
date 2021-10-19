@@ -23,10 +23,10 @@ export default function NewCounter(props) {
         event.stopPropagation();
 
         let valid = true;
-        if(counterNum == 0){
+       /* if(counterNum == 0){
             valid = false;
             setError("Cannot exists a counter with 0");
-        }
+        }*/
         if(servicesChosen.length == 0){
             valid = false;
             setError("A counter must serve one o more services");

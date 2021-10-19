@@ -11,6 +11,17 @@ async function updateOfficerStatus(officerId, stat) {
     if(response.ok) {
         return null;
     } else return { 'err': 'PUT error' };
-}
+};
 
-export default {updateOfficerStatus}
+async function updateTickets (officerId) {
+    const response = await fetch('/api/updateTickets/officer/' + officerId , {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+    });
+    if(response.ok) {
+        return null;
+    } else return { 'err': 'PUT error' };
+};
+
+
+export default {updateOfficerStatus, updateTickets}

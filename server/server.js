@@ -145,6 +145,25 @@ app.put('/api/officer/:officerId/status/:stat', async (req, res) => {
   }
 });
 
+//update tickets
+app.put('/api/updateTickets/officer/:officerId', async (req, res) => {
+  try {
+    let ticketId = await ticketDao.getTicketServed(req.params.officerId);
+    console.log("ticketId = ", ticketId);
+    await ticketDao.updateTicketServed(req.params.officerId, ticketId);
+    console.log("ok")
+    ticketId = await ticketDao.getNextTicketToServe(req.params.officerId);
+    console.log("da eliminare: ", ticketId.tn);
+    await ticketDao.deleteTicketToServe(ticketId.tn);
+    console.log("aggiungo ora");
+    await ticketDao.addTicketServed(ticketId.tn, ticketId.id_service,req.params.officerId )
+    res.status(201).end();
+  } catch (err) {
+    res.status(503).json({ error: `Database error ${err}.` });
+  }
+});
+
+
 // activate the server
 app.listen(port, () => {
   console.log(`Server listening at http://localhost:${port}`);
