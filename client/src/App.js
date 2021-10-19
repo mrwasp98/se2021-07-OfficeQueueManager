@@ -40,8 +40,11 @@ function App() {
   },[]);
 
   useEffect(() => { 
-    API.getNextClient().then((nextOne) => setNextOne(nextOne));console.log("appjs" + nextOne);
-  }, []);
+    if (flagOfficer){
+      setFlagOfficer(false);
+      API.getNextClient().then((nextOne) => setNextOne(nextOne));console.log("appjs" + nextOne);
+    }
+  }, [flagOfficer]);
 
   useEffect(() => {
     if (flagOfficer) {

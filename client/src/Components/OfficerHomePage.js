@@ -24,7 +24,7 @@ function OfficerHomePage(props) {
 
             <Card className="text-center">
                 <Card.Body>
-                    <Alert key={1} variant={'success'}>Next Ticket Number Is :   {props.nextClient.NextOne} </Alert>
+                    <Alert key={1} variant={'success'}>Next Ticket Number Is :   {props.nextClient.NextOne? props.nextClient.NextOne:"There is not anyone in the line"} </Alert>
                     {/* <Alert key={2} variant={'info'}> :  {}</Alert> */}
                 </Card.Body>
             </Card>
