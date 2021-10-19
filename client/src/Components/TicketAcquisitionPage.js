@@ -49,6 +49,27 @@ export default function TicketAcquisitionPage(props) {
         <Container className="justify-content-center pt-5 mt-5 mb-5">
             <h1 className="text-center">Welcome, Customer.</h1>
             <Card className="text-center">
+                {/* <Card.Body>
+                    <Alert key={1} variant={'success'}>The Estimate Time :   {props.estimation.EstimateTime} min</Alert>
+                    <Alert key={2} variant={'info'}> The number of people in front of you:  {props.estimation.InLinePerson}</Alert>
+                </Card.Body> */}
+                <Card.Body>
+                    <h2>Queue:</h2>
+                    <Row >
+                        <Col> <h4>Ticket Number</h4></Col>
+                        <Col> <h4>Counter Id</h4></Col>
+                    </Row>
+                    {queue.map((t, i) => {
+                        return (
+                            <Row key={i}>
+                                <Col> {t.ticket_num}</Col>
+                                <Col> {t.counterId}</Col>
+                            </Row>
+                        )
+                    })}
+                </Card.Body>
+                </Card>
+            <Card className="text-center">
                 <Card.Body>
                     <Card.Text>
                         If you want to <b>be served</b>, this is the right place.
@@ -81,33 +102,16 @@ export default function TicketAcquisitionPage(props) {
                     </Card.Footer>}
             </Card>
 
-            {ticketId && <Card className="text-center">
-                {/* <Card.Body>
-                    <Alert key={1} variant={'success'}>The Estimate Time :   {props.estimation.EstimateTime} min</Alert>
-                    <Alert key={2} variant={'info'}> The number of people in front of you:  {props.estimation.InLinePerson}</Alert>
-                </Card.Body> */}
-                <Card.Body>
-                    <h2>Queue:</h2>
-                    <Row >
-                        <Col> <h4>Ticket Number</h4></Col>
-                        <Col> <h4>Counter Id</h4></Col>
-                    </Row>
-                    {queue.map((t, i) => {
-                        return (
-                            <Row key={i}>
-                                <Col> {t.ticket_num}</Col>
-                                <Col> {t.counterId}</Col>
-                            </Row>
-                        )
-                    })}
-                </Card.Body>
+            
                 {find &&
+                <Card>
                     <Card.Footer>
                         <Alert variant="info" className="mb-0 mr-1"> It's your turn!</Alert>
                     </Card.Footer>
+                </Card>
                 }
 
-            </Card>}
+          
         </Container>
     );
 }

@@ -19,15 +19,15 @@ function OfficerHomePage(props) {
 
     return (<>
         {/* Main containter */}
-        <Container className="justify-content-center pt-5 mt-3">
+        <Container className="justify-content-center pt-5 mt-3 mb-5">
             <h1 className="text-center">Welcome, Officer.</h1>
 
-            <Card className="text-center">
+            {/* <Card className="text-center">
                 <Card.Body>
-                    <Alert key={1} variant={'success'}>Next Ticket Number Is :   {props.nextClient.NextOne? props.nextClient.NextOne:"There is not anyone in the line"} </Alert>
-                    {/* <Alert key={2} variant={'info'}> :  {}</Alert> */}
+                    { <Alert key={1} variant={'success'}>Next Ticket Number Is :   {props.nextClient.NextOne? props.nextClient.NextOne:"There is not anyone in the line"} </Alert> }
+                    { <Alert key={2} variant={'info'}> :  {}</Alert> }
                 </Card.Body>
-            </Card>
+            </Card> */}
 
             {/* Card to show the list of officers */}
             <Card className="text-left">
