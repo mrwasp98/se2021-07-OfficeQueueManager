@@ -103,11 +103,12 @@ exports.getServedCustomer = () => {
 exports.getNextCustomerInLine = () => {
   return new Promise((resolve, reject) => {
     const sql = 'SELECT min(ticket_num) as NextOne FROM tickets_to_serve where date = ?';
-    db.all(sql, [dayjs(new Date()).format('YYYY-MM-DD')], (err, rows) => {
+    db.get(sql, [dayjs(new Date()).format('YYYY-MM-DD')], (err, rows) => {
       if (err) {
         reject(err);
         return;
       }
+      
       resolve(rows);
     });
   });

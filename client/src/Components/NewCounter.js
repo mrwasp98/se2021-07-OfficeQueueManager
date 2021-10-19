@@ -33,10 +33,16 @@ export default function NewCounter(props) {
             servicesChosen.forEach(s=>addCounter(s)
                 .then(() => setLoading(false))
                 .catch(res => setError(res.message))
+<<<<<<< Updated upstream
                 .finally(() => setLoading(false)));
+=======
+                .finally(() => {
+                    setLoading(false)
+                });
+                setServicesChosen();
+>>>>>>> Stashed changes
         }
     }
-
 
     return (<Container className="justify-content-center pt-5 mt-2 mb-4">
         <Card className="text-center">
