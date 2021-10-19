@@ -54,10 +54,11 @@ app.post('/api/services',
 app.post('/api/counters', async (req, res) => {
   const counterId = await counterDao.getNewCounterID();
   const service = req.body.service;
-  console.log(service);
   const serviceId = await serviceDao.getId(service);
+  //console.log(serviceId);
   try {
     const result = await counterDao.createCounter(counterId, serviceId);
+    console.log(result);
     res.json(result);
   }
   catch (err) {
