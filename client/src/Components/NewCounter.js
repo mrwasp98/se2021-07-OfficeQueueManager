@@ -9,7 +9,7 @@ export default function NewCounter(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [servicesChosen, setServicesChosen] = useState([]);
-
+    const [allFalse, setAllFalse] = useState(false);
     // when a service is checked this useEffect render the form so when I will click on the submit i send to server a correct list
     useEffect(() => {
 
@@ -36,7 +36,8 @@ export default function NewCounter(props) {
                 .finally(() => {
                     setLoading(false)
                 }));
-                setServicesChosen();
+                setServicesChosen([]);
+                setAllFalse(true);
         }
     }
 
@@ -50,7 +51,7 @@ export default function NewCounter(props) {
                 <Form onSubmit={handleSubmit}>
                     Select services that new counter can serve
 
-                    {props.services.map(s => <Row className="mb-1 ml-2"><Service service={s} servicesChosen={servicesChosen} setServicesChosen={setServicesChosen}>  </Service></Row>)}
+                    {props.services.map(s => <Row className="mb-1 ml-2"><Service service={s} servicesChosen={servicesChosen} allFalse={allFalse} setAllFalse={setAllFalse} setServicesChosen={setServicesChosen}>  </Service></Row>)}
 
                     <Row className="justify-content-end">
                         {loading && (<Alert variant="info" className="mb-0 mr-1"> Now adding</Alert>)}
