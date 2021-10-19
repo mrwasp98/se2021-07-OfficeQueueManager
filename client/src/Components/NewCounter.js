@@ -33,14 +33,10 @@ export default function NewCounter(props) {
             servicesChosen.forEach(s=>addCounter(s)
                 .then(() => setLoading(false))
                 .catch(res => setError(res.message))
-<<<<<<< Updated upstream
-                .finally(() => setLoading(false)));
-=======
                 .finally(() => {
                     setLoading(false)
-                });
+                }));
                 setServicesChosen();
->>>>>>> Stashed changes
         }
     }
 
