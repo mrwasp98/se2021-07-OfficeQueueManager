@@ -2,7 +2,7 @@
 // Implements by Riccardo and Francesco
 // Date update: 18/10/2021
 
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap';
 import { useState } from "react";
 import API from "../API/PutAPI.js"
 
@@ -21,6 +21,13 @@ function OfficerHomePage(props) {
         {/* Main containter */}
         <Container className="justify-content-center pt-5 mt-3">
             <h1 className="text-center">Welcome, Officer.</h1>
+
+            <Card className="text-center">
+                <Card.Body>
+                    <Alert key={1} variant={'success'}>Next Ticket Number Is :   {props.nextClient.NextOne} </Alert>
+                    {/* <Alert key={2} variant={'info'}> :  {}</Alert> */}
+                </Card.Body>
+            </Card>
 
             {/* Card to show the list of officers */}
             <Card className="text-left">
