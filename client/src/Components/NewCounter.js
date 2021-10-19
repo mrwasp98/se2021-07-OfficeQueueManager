@@ -23,10 +23,6 @@ export default function NewCounter(props) {
         event.stopPropagation();
 
         let valid = true;
-       /* if(counterNum == 0){
-            valid = false;
-            setError("Cannot exists a counter with 0");
-        }*/
         if(servicesChosen.length == 0){
             valid = false;
             setError("A counter must serve one o more services");
@@ -34,10 +30,10 @@ export default function NewCounter(props) {
 
         if (form.checkValidity() === true && valid === true) {
             setLoading(true);
-            addCounter(servicesChosen)
+            servicesChosen.forEach(s=>addCounter(s)
                 .then(() => setLoading(false))
                 .catch(res => setError(res.message))
-                .finally(() => setLoading(false));
+                .finally(() => setLoading(false)));
         }
     }
 
