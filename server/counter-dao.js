@@ -2,18 +2,38 @@
 
 const db = require('./database');
 
-exports.createCounter = (counterId, serviceId) => {
-    return new Promise((resolve, reject) => {
-        const sql = 'INSERT INTO counter_service(counterId, serviceId) VALUES(?, ?)';
+const createCounter = async (counterId, servicesId) => {
+  const sql = 'INSERT INTO counter_service(counterId, serviceId) VALUES(?, ?)';
+  for(const serviceId of servicesId){
+    console.log(serviceId);
+    await new Promise((resolve, reject) => {
         db.run(sql, [counterId,serviceId], function (err) {
-            if (err) {
-                reject(err);
-                return;
-            }
-            resolve(counterId);
+            if (err) return reject(err);
+            console.log("fatto")
+            resolve(this.lastID);
         });
     });
+  }
+  return (0);
 };
+
+
+const getServicesID = async (servicesNames) => {
+  let result =[];
+  let sql = 'SELECT id FROM services WHERE tag_name=?'
+  for (const serviceName of servicesNames) {
+    console.log("nome: ", serviceName);
+    let id = await new Promise((resolve, reject) => {
+        db.get(sql, [serviceName], function (err, row) {
+            if (err) return reject(err);
+            console.log("id del servizio:", row.id)
+            resolve(row.id);
+        })
+    })
+    result.push(id); 
+  }
+  return(result);
+}
 
 exports.getNewCounterID = function () {
     return new Promise((resolve, reject) => {
@@ -26,3 +46,6 @@ exports.getNewCounterID = function () {
       });
     });
   }
+
+  exports.getServicesID = getServicesID;
+  exports.createCounter = createCounter;

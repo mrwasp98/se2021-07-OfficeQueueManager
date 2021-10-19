@@ -25,14 +25,16 @@ const addService = (tagName, serviceTime) => {
   }
 
   const addCounter = (services) => {
+    console.log(services);
     return new Promise((resolve, reject) => {
       fetch('/api/counters', {
         method: "POST",
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify({services: JSON.stringify(services)})
+        body: JSON.stringify({services: services})
       }).then((res) => {
+        console.log(res);
           if (!res.ok) {
             const error = new Error(`${res.status}: ${res.statusText}`);
             error.response = res;

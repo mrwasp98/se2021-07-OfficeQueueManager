@@ -49,3 +49,11 @@ GET http://localhost:3001/api/ServedCustomer HTTP/1.1
 
 ###
 PUT http://localhost:3001/api/updateTickets/officer/1 HTTP/1.1
+
+###
+POST http://localhost:3001/api/counters HTTP/1.1
+content-type: application/json
+
+{
+    "services" : [ "International Mail", "Letters", "Registered Mail" ]
+}

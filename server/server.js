@@ -52,12 +52,13 @@ app.post('/api/services',
 
 //insert new counter (with one or more services)
 app.post('/api/counters', async (req, res) => {
+  console.log("parametri", req.body.services);
   const counterId = await counterDao.getNewCounterID();
-  //console.log(counterId);
-  const services = req.body.services;
+  console.log(counterId);
+  const servicesids = await counterDao.getServicesID(req.body.services);
   try {
-    const result = await counterDao.createCounter(counterId, services);
-    res.json(result);
+    let result = await counterDao.createCounter(counterId, servicesids);
+    res.status(200).json({ok:"tutto ok"});
   }
   catch (err) {
     res.status(503).json({ error: `Database error during the creation of new counter: ${err}.` });
