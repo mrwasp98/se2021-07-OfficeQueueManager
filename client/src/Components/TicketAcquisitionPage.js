@@ -1,13 +1,15 @@
-import { Card, Container, Alert, Form, Button, Row } from "react-bootstrap";
-import { useState } from "react";
+import { Card, Container, Alert, Form, Button, Row, Col } from "react-bootstrap";
+import { useState, useEffect } from "react";
 import { addTicket } from '../API/PostAPI'
-
+import { getQueue } from '../API/GetAPI'
 
 export default function TicketAcquisitionPage(props) {
     const [service, setService] = useState("");
     const [ticketId, setTicketId] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [queue, setQueue] = useState([]);
+    const [find, setFind] = useState(false);
 
     const handleSubmit = (event) => {
         setError("");
@@ -28,8 +30,23 @@ export default function TicketAcquisitionPage(props) {
         }
     };
 
+    useEffect(() => {
+        getQueue()
+            .then((res) => {
+                setQueue(res)
+                console.log(res);
+            })
+            .then(() => {
+                queue.map(el => {
+                    if (el.ticket_num == ticketId) {
+                        setFind(true);
+                    }
+                })
+            })
+    }, []);
+
     return (
-        <Container className="justify-content-center pt-5 mt-5">
+        <Container className="justify-content-center pt-5 mt-5 mb-5">
             <h1 className="text-center">Welcome, Customer.</h1>
             <Card className="text-center">
                 <Card.Body>
@@ -65,10 +82,31 @@ export default function TicketAcquisitionPage(props) {
             </Card>
 
             {ticketId && <Card className="text-center">
-                <Card.Body>
+                {/* <Card.Body>
                     <Alert key={1} variant={'success'}>The Estimate Time :   {props.estimation.EstimateTime} min</Alert>
                     <Alert key={2} variant={'info'}> The number of people in front of you:  {props.estimation.InLinePerson}</Alert>
+                </Card.Body> */}
+                <Card.Body>
+                    <h2>Queue:</h2>
+                    <Row >
+                        <Col> <h4>Ticket Number</h4></Col>
+                        <Col> <h4>Counter Id</h4></Col>
+                    </Row>
+                    {queue.map((t, i) => {
+                        return (
+                            <Row key={i}>
+                                <Col> {t.ticket_num}</Col>
+                                <Col> {t.counterId}</Col>
+                            </Row>
+                        )
+                    })}
                 </Card.Body>
+                {find &&
+                    <Card.Footer>
+                        <Alert variant="info" className="mb-0 mr-1"> It's your turn!</Alert>
+                    </Card.Footer>
+                }
+
             </Card>}
         </Container>
     );

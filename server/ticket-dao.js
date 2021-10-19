@@ -182,3 +182,14 @@ exports.addTicketServed =  (ticketId, serviceId, officerId) => {
   })
 }
 
+exports.getQueue = ()=>{
+  return new Promise((resolve, reject) => {
+    let sql = "select ticket_num, counterId from tickets_served T, officers O \
+    where T.id_officer = O.officerId and end_time IS NULL ";
+    db.all(sql,[], (err, rows) => {
+      if (err) return reject({ "error": err });
+      resolve(rows)
+    })
+  })
+}
+

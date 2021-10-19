@@ -57,3 +57,6 @@ content-type: application/json
 {
     "services" : [ "International Mail", "Letters", "Registered Mail" ]
 }
+
+###
+GET http://localhost:3001/api/queue HTTP/1.1

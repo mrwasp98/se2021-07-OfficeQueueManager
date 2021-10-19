@@ -165,6 +165,12 @@ app.put('/api/updateTickets/officer/:officerId', async (req, res) => {
   }
 });
 
+app.get('/api/queue',
+  async (req, res) => {
+    ticketDao.getQueue()
+      .then(tickes => res.json(tickes))
+      .catch(() => res.status(500).end());
+  });
 
 // activate the server
 app.listen(port, () => {
