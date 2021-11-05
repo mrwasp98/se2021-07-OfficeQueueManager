@@ -24,7 +24,7 @@ function App() {
       API.getAllServices().then((officers) => setAllOfficers(officers))  
       setFlagOfficer(false);
     }
-    
+    //console.log("ciao");
   }, []);
 
   useEffect(() => {
